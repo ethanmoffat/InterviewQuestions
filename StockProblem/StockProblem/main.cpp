@@ -63,9 +63,10 @@ std::list<BuySell> FindBestDays(std::shared_ptr<int> inputStockPrices, int numbe
 
 	for (int i = 1; i < numberOfPrices; ++i)
 	{
-		if (ptr[i] < ptr[localMax] && localMax - localMin > 0)
+		if (ptr[i] < ptr[localMax])
 		{
-			retList.push_back(BuySell(localMin, localMax));
+			if (localMax - localMin > 0)
+				retList.push_back(BuySell(localMin, localMax));
 			localMin = localMax = i;
 		}
 		else if (ptr[i] > ptr[localMax])
@@ -75,7 +76,7 @@ std::list<BuySell> FindBestDays(std::shared_ptr<int> inputStockPrices, int numbe
 			localMin = i;
 	}
 
-	if (localMax > 0)
+	if (localMax - localMin > 0)
 		retList.push_back(BuySell(localMin, localMax));
 
 	return retList;
