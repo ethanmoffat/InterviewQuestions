@@ -37,12 +37,9 @@ int main(int argc, char * argv[])
 		PNode head = CreateList(listItemsForThisTestCase, numberOfListItems);
 		PNode newHead = ReverseList(head);
 
-		PrintList(head);
 		PrintList(newHead);
-		FreeList(head);
-		FreeList(newHead);
 
-		std::cout << std::endl;
+		FreeList(newHead);
 	}
 
 	inputFile.close();
@@ -69,7 +66,23 @@ PNode CreateList(const std::shared_ptr<int>&  inputArray, int numberOfItems)
 
 PNode ReverseList(PNode head)
 {
-	return nullptr;
+	if (head == nullptr || head->next == nullptr)
+		return head;
+
+	PNode current = head;
+	PNode previous = nullptr;
+
+	while (current != nullptr)
+	{
+		PNode temp = current;
+		current = current->next;
+
+		temp->next = previous;
+
+		previous = temp;
+	}
+
+	return previous;
 }
 
 void PrintList(PNode head)
