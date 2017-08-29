@@ -17,7 +17,7 @@ std::list<BuySell> FindBestDays(std::shared_ptr<int> inputStockPrices, int numbe
 
 int main(int argc, char * argv[])
 {
-	ProblemEngine engine("input.txt");
+	ProblemEngine<> engine("input.txt");
 	if (!engine.IsFileOk())
 	{
 		std::cout << "Unable to open input.txt" << std::endl;
@@ -28,7 +28,7 @@ int main(int argc, char * argv[])
 
 	for (const auto& testCase : testCases)
 	{
-		auto buySellPairs = FindBestDays(testCase.Data, testCase.Size);
+		auto buySellPairs = FindBestDays(testCase.Datas.front(), testCase.Sizes.front());
 		if (buySellPairs.size() == 0)
 			std::cout << "No Profit";
 

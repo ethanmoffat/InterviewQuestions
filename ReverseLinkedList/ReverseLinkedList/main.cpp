@@ -9,7 +9,7 @@ PNode ReverseList(PNode head);
 
 int main(int argc, char * argv[])
 {
-	ProblemEngine engine("input.txt");
+	ProblemEngine<> engine("input.txt");
 	if (!engine.IsFileOk())
 	{
 		std::cout << "Unable to open input.txt" << std::endl;
@@ -20,7 +20,7 @@ int main(int argc, char * argv[])
 
 	for (const auto& testCase : testCases)
 	{
-		PNode head = CreateList(testCase.Data, testCase.Size);
+		PNode head = CreateList(testCase.Datas.front(), testCase.Sizes.front());
 		PNode newHead = ReverseList(head);
 
 		PrintList(newHead);

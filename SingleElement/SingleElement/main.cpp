@@ -8,7 +8,7 @@ int FindSingleElement(const std::shared_ptr<int>& inputArray, int size);
 
 int main(int argc, char * argv[])
 {
-	ProblemEngine engine("input.txt");
+	ProblemEngine<> engine("input.txt");
 	if (!engine.IsFileOk())
 	{
 		std::cout << "Unable to open input.txt" << std::endl;
@@ -19,10 +19,10 @@ int main(int argc, char * argv[])
 
 	for (const auto& testCase : testCases)
 	{
-		if (testCase.Size % 2 == 0) //only odd inputs accepted
+		if (testCase.Sizes.front() % 2 == 0) //only odd inputs accepted
 			continue;
 
-		auto singleElement = FindSingleElement(testCase.Data, testCase.Size);
+		auto singleElement = FindSingleElement(testCase.Datas.front(), testCase.Sizes.front());
 
 		std::cout << singleElement << std::endl;
 	}

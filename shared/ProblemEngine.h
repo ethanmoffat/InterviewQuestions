@@ -5,15 +5,14 @@
 #include <memory>
 #include <fstream>
 
+template<typename T = int>
 struct TestCase
 {
-	std::shared_ptr<int> Data;
-	int Size;
-
-	TestCase(const std::shared_ptr<int> data, int size)
-		: Data(data), Size(size) { }
+	std::list<std::shared_ptr<T>> Datas;
+	std::list<int> Sizes;
 };
 
+template<typename T = int>
 class ProblemEngine
 {
 public:
@@ -33,7 +32,7 @@ public:
 
 	bool IsFileOk() const { return !_inputFile.bad() && !_inputFile.eof(); }
 
-	std::list<TestCase> LoadTestCases()
+	std::list<TestCase<T>> LoadTestCases(int inputsPerCase = 1)
 	{
 		if (!IsFileOk())
 			throw std::exception("File could not be opened");
@@ -41,18 +40,30 @@ public:
 		int numberOfTestCases = 0;
 		_inputFile >> numberOfTestCases;
 
-		std::list<TestCase> retList;
+		std::list<TestCase<T>> retList;
 
 		for (int i = 0; i < numberOfTestCases; ++i)
 		{
-			int numberOfListItems = 0;
-			_inputFile >> numberOfListItems;
+			std::list<int> numbersOfInputs;
+			for (int inp = 0; inp < inputsPerCase; ++inp)
+			{
+				int numberOfListItemsThisInput = 0;
+				_inputFile >> numberOfListItemsThisInput;
+				numbersOfInputs.push_back(numberOfListItemsThisInput);
+			}
 
-			std::shared_ptr<int> listItemsForThisTestCase(new int[numberOfListItems]);
-			for (int j = 0; j < numberOfListItems; ++j)
-				_inputFile >> listItemsForThisTestCase.get()[j];
+			TestCase<T> testCase;
+			for (const auto elementsInSpecificInput : numbersOfInputs)
+			{
+				std::shared_ptr<T> listItemsForThisTestCase(new T[elementsInSpecificInput]);
+				for (int j = 0; j < elementsInSpecificInput; ++j)
+					_inputFile >> listItemsForThisTestCase.get()[j];
 
-			retList.push_back(TestCase(listItemsForThisTestCase, numberOfListItems));
+				testCase.Datas.push_back(listItemsForThisTestCase);
+				testCase.Sizes.push_back(elementsInSpecificInput);
+			}
+
+			retList.push_back(testCase);
 		}
 
 		return retList;
