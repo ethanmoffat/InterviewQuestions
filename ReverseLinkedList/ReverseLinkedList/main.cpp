@@ -5,6 +5,8 @@
 #include "..\..\shared\list.h"
 #include "..\..\shared\ProblemEngine.h"
 
+PNode ReverseList(PNode head);
+
 int main(int argc, char * argv[])
 {
 	ProblemEngine engine("input.txt");
@@ -27,4 +29,25 @@ int main(int argc, char * argv[])
 	}
 
 	return 0;
+}
+
+PNode ReverseList(PNode head)
+{
+	if (head == nullptr || head->next == nullptr)
+		return head;
+
+	PNode current = head;
+	PNode previous = nullptr;
+
+	while (current != nullptr)
+	{
+		PNode temp = current;
+		current = current->next;
+
+		temp->next = previous;
+
+		previous = temp;
+	}
+
+	return previous;
 }
