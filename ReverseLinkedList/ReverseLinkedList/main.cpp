@@ -3,37 +3,28 @@
 #include <memory>
 
 #include "list.h"
+#include "ProblemEngine.h"
 
 int main(int argc, char * argv[])
 {
-	std::ifstream inputFile("input.txt");
-	if (inputFile.bad() || inputFile.eof())
+	ProblemEngine engine("input.txt");
+	if (!engine.IsFileOk())
 	{
 		std::cout << "Unable to open input.txt" << std::endl;
 		return 1;
 	}
 
-	int numberOfTestCases = 0;
-	inputFile >> numberOfTestCases;
+	auto testCases = engine.LoadTestCases();
 
-	for (int i = 0; i < numberOfTestCases; ++i)
+	for (const auto& testCase : testCases)
 	{
-		int numberOfListItems = 0;
-		inputFile >> numberOfListItems;
-
-		std::shared_ptr<int> listItemsForThisTestCase(new int[numberOfListItems]);
-		for (int j = 0; j < numberOfListItems; ++j)
-			inputFile >> listItemsForThisTestCase.get()[j];
-
-		PNode head = CreateList(listItemsForThisTestCase, numberOfListItems);
+		PNode head = CreateList(testCase.Data, testCase.Size);
 		PNode newHead = ReverseList(head);
 
 		PrintList(newHead);
 
 		FreeList(newHead);
 	}
-
-	inputFile.close();
 
 	return 0;
 }
