@@ -2,8 +2,8 @@
 #include <fstream>
 #include <memory>
 
-#include "list.h"
-#include "ProblemEngine.h"
+#include "..\..\shared\list.h"
+#include "..\..\shared\ProblemEngine.h"
 
 int main(int argc, char * argv[])
 {
