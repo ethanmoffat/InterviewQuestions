@@ -1,7 +1,8 @@
 #include <iostream>
 #include <fstream>
 #include <list>
-#include <memory>
+
+#include "..\..\shared\ProblemEngine.h"
 
 struct BuySell
 {
@@ -16,26 +17,18 @@ std::list<BuySell> FindBestDays(std::shared_ptr<int> inputStockPrices, int numbe
 
 int main(int argc, char * argv[])
 {
-	std::ifstream inputFile("input.txt");
-	if (inputFile.bad() || inputFile.eof())
+	ProblemEngine engine("input.txt");
+	if (!engine.IsFileOk())
 	{
 		std::cout << "Unable to open input.txt" << std::endl;
 		return 1;
 	}
 
-	int numberOfTestCases = 0;
-	inputFile >> numberOfTestCases;
+	auto testCases = engine.LoadTestCases();
 
-	for (int i = 0; i < numberOfTestCases; ++i)
+	for (const auto& testCase : testCases)
 	{
-		int numberOfStockDays = 0;
-		inputFile >> numberOfStockDays;
-
-		std::shared_ptr<int> stocksForThisTestCase(new int[numberOfStockDays]);
-		for (int j = 0; j < numberOfStockDays; ++j)
-			inputFile >> stocksForThisTestCase.get()[j];
-
-		auto buySellPairs = FindBestDays(stocksForThisTestCase, numberOfStockDays);
+		auto buySellPairs = FindBestDays(testCase.Data, testCase.Size);
 		if (buySellPairs.size() == 0)
 			std::cout << "No Profit";
 
@@ -44,8 +37,6 @@ int main(int argc, char * argv[])
 
 		std::cout << std::endl;
 	}
-
-	inputFile.close();
 
 	return 0;
 }
