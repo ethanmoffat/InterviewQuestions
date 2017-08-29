@@ -5,6 +5,15 @@
 #include <memory>
 #include <fstream>
 
+struct TestCase
+{
+	std::shared_ptr<int> Data;
+	int Size;
+
+	TestCase(const std::shared_ptr<int> data, int size)
+		: Data(data), Size(size) { }
+};
+
 class ProblemEngine
 {
 public:
@@ -24,7 +33,7 @@ public:
 
 	bool IsFileOk() const { return !_inputFile.bad() && !_inputFile.eof(); }
 
-	std::list<std::shared_ptr<int>> LoadTestCases()
+	std::list<TestCase> LoadTestCases()
 	{
 		if (!IsFileOk())
 			throw std::exception("File could not be opened");
@@ -32,7 +41,7 @@ public:
 		int numberOfTestCases = 0;
 		_inputFile >> numberOfTestCases;
 
-		std::list<std::shared_ptr<int>> retList;
+		std::list<TestCase> retList;
 
 		for (int i = 0; i < numberOfTestCases; ++i)
 		{
@@ -43,7 +52,7 @@ public:
 			for (int j = 0; j < numberOfListItems; ++j)
 				_inputFile >> listItemsForThisTestCase.get()[j];
 
-			retList.push_back(listItemsForThisTestCase);
+			retList.push_back(TestCase(listItemsForThisTestCase, numberOfListItems));
 		}
 
 		return retList;
