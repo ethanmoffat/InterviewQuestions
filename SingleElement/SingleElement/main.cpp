@@ -32,5 +32,27 @@ int main(int argc, char * argv[])
 
 int FindSingleElement(const std::shared_ptr<int>& inputArray, int size)
 {
-	return 0;
+	const int INT_SIZE_IN_BITS = 32;
+
+	//this method only works if there are 'n' occurrences of each element other than the single element
+	//in the case of this test data, there are two occurrences of every other element since the problem states pairs of people
+	const int EXPECTED_ELEMENT_OCCURRENCES = 2;
+
+	int result = 0;
+	auto ptr = inputArray.get();
+
+	for (int bit = 0; bit < INT_SIZE_IN_BITS; ++bit)
+	{
+		int sum = 0;
+		int bitMask = 1 << bit;
+
+		for (int i = 0; i < size; ++i)
+			if (ptr[i] & bitMask)
+				sum++;
+
+		if (sum % EXPECTED_ELEMENT_OCCURRENCES != 0)
+			result |= bitMask;
+	}
+
+	return result;
 }
