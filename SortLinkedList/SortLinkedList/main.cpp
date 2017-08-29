@@ -33,5 +33,28 @@ int main(int argc, char * argv[])
 
 PNode SortList(PNode head)
 {
-	return nullptr;
+	const int NUM_VALUES = 3;
+	int count[NUM_VALUES] = { 0 };
+	PNode current = head;
+
+	while (current != nullptr)
+	{
+		if (current->value < 0 || current->value >= NUM_VALUES)
+			throw std::exception("Invalid list value");
+
+		count[current->value]++;
+		current = current->next;
+	}
+
+	current = head;
+	for (int ndx = 0; ndx < NUM_VALUES; ++ndx)
+	{
+		for (int i = 0; i < count[ndx]; ++i)
+		{
+			current->value = ndx;
+			current = current->next;
+		}
+	}
+
+	return head;
 }
