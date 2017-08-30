@@ -1,7 +1,10 @@
 #include <iostream>
 #include <ctime>
+#include <map>
 
 #include "..\..\shared\ProblemEngine.h"
+
+typedef std::map<size_t, std::map<size_t, int>> EditDistMap;
 
 //build properly terminated string out of raw character pointer
 std::string BuildString(char * ptr, int numElements)
@@ -18,6 +21,7 @@ size_t min(size_t a, size_t b)
 }
 
 int EditDistance(const std::string& one, const std::string& two);
+int EditDistanceDynamic(const std::string& one, const std::string& two);
 
 int main(int argc, char * argv[])
 {
@@ -39,7 +43,12 @@ int main(int argc, char * argv[])
 		auto editDistance = EditDistance(firstString, secondString);
 		auto time = double(clock() - start) / CLOCKS_PER_SEC;
 
+		start = clock();
+		auto editDistanceDyn = EditDistanceDynamic(firstString, secondString);
+		auto timeDyn = double(clock() - start) / CLOCKS_PER_SEC;
+
 		std::cout << editDistance << " (" << time << ")" << std::endl;
+		std::cout << editDistanceDyn << " (" << timeDyn << ")" << std::endl;
 	}
 
 	return 0;
@@ -63,4 +72,31 @@ int EditDistance(const std::string& one, const std::string& two)
 		EditDistance(one, newTwo)),
 		EditDistance(newOne, newTwo)
 	);
+}
+
+int EditDistanceDynamic(const std::string& one, const std::string& two)
+{
+	EditDistMap lut;
+
+	for (size_t i = 0; i <= one.size(); ++i)
+	{
+		for (size_t j = 0; j <= two.size(); ++j)
+		{
+			if (i == 0)
+				lut[i][j] = j;
+			else if (j == 0)
+				lut[i][j] = i;
+			else if (one[i-1] == two[j-1])
+				lut[i][j] = lut[i - 1][j - 1];
+			else
+			{
+				lut[i][j] = 1 + min(min(
+					lut[i - 1][j],
+					lut[i][j - 1]),
+					lut[i - 1][j - 1]);
+			}
+		}
+	}
+
+	return lut[one.size()][two.size()];
 }
