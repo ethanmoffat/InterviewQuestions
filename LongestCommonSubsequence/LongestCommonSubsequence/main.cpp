@@ -3,6 +3,7 @@
 #include <memory>
 #include <string>
 #include <map>
+#include <ctime>
 
 #include "..\..\shared\ProblemEngine.h"
 
@@ -36,13 +37,17 @@ int main(int argc, char * argv[])
 		auto string1 = BuildString(testCase.Datas.front().get(), testCase.Sizes.front());
 		auto string2 = BuildString(testCase.Datas.back().get(), testCase.Sizes.back());
 
+		auto start = clock();
 		auto lcs = LongestCommonSubsequence(string1, string2);
+		auto lcsTime = double(clock() - start) / CLOCKS_PER_SEC;
 
 		LcsMap map;
+		start = clock();
 		auto lcsDynamic = LongestCommonSubsequenceDynamic(string1, string2, map);
+		auto lcsDynamicTime = double(clock() - start) / CLOCKS_PER_SEC;
 
-		std::cout << lcs.size() << ": " << lcs << std::endl;
-		std::cout << lcsDynamic.size() << ": " << lcsDynamic << std::endl;
+		std::cout << lcs.size() << ": " << lcs << " (" << lcsTime << ")" << std::endl;
+		std::cout << lcsDynamic.size() << ": " << lcsDynamic << " (" << lcsDynamicTime << ")" << std::endl;
 	}
 
 	return 0;
