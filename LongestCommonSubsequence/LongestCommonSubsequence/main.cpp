@@ -20,6 +20,7 @@ typedef std::map<int, std::map<int, std::string>> LcsMap;
 
 std::string LongestCommonSubsequence(const std::string& str1, const std::string& str2);
 std::string LongestCommonSubsequenceDynamic(const std::string& str1, const std::string& str2, LcsMap &map);
+std::string LCSIterativeDynamic(const std::string& str1, const std::string& str2);
 
 int main(int argc, char * argv[])
 {
@@ -48,6 +49,11 @@ int main(int argc, char * argv[])
 
 		std::cout << lcs.size() << ": " << lcs << " (" << lcsTime << ")" << std::endl;
 		std::cout << lcsDynamic.size() << ": " << lcsDynamic << " (" << lcsDynamicTime << ")" << std::endl;
+
+		start = clock();
+		auto lcsIterativeDynamic = LCSIterativeDynamic(string1, string2);
+		auto lcsIterativeDynamicTime = double(clock() - start) / CLOCKS_PER_SEC;
+		std::cout << lcsIterativeDynamic.size() << ": " << lcsIterativeDynamic << " (" << lcsIterativeDynamicTime << ")" << std::endl;
 	}
 
 	return 0;
@@ -98,4 +104,27 @@ std::string LongestCommonSubsequenceDynamic(const std::string& str1, const std::
 	auto second = map[str1.size()][str2NewSize];
 
 	return first.length() > second.length() ? first : second;
+}
+
+std::string LCSIterativeDynamic(const std::string& str1, const std::string& str2)
+{
+	LcsMap map;
+
+	for (int i = 0; i < str1.length(); ++i)
+	{
+		for (int j = 0; j < str2.length(); ++j)
+		{
+			if (str1[i] == str2[j])
+				map[i+1][j+1] = map[i][j] + str1[i];
+			else
+			{
+				auto first = map[i][j+1];
+				auto second = map[i+1][j];
+
+				map[i+1][j+1] = first.length() > second.length() ? first : second;
+			}
+		}
+	}
+
+	return map[str1.length()][str2.length()];
 }
