@@ -63,27 +63,23 @@ int main(int argc, char * argv[])
 
 int FindShortestPath(int ** ptr, int rowSize)
 {
-	auto lut = CreateMatrix(nullptr, rowSize);
-
 	for (int i = 0; i < rowSize; ++i)
 	{
 		for (int j = 0; j < rowSize; ++j)
 		{
 			if (i == 0 && j == 0)
-				lut[i][j] = ptr[i][j];
+				continue;
 			else if (i == 0)
-				lut[i][j] = lut[i][j - 1] + ptr[i][j];
+				ptr[i][j] += ptr[i][j - 1];
 			else if (j == 0)
-				lut[i][j] = lut[i - 1][j] + ptr[i][j];
+				ptr[i][j] += ptr[i - 1][j];
 			else
-				lut[i][j] = min(
-					lut[i - 1][j],
-					lut[i][j - 1],
-					lut[i - 1][j - 1]) + ptr[i][j];
+				ptr[i][j] += min(
+					ptr[i - 1][j],
+					ptr[i][j - 1],
+					ptr[i - 1][j - 1]);
 		}
 	}
 	
-	auto ret = lut[rowSize-1][rowSize-1];
-	DeleteMatrix(lut, rowSize);
-	return ret;
+	return ptr[rowSize-1][rowSize-1];
 }
