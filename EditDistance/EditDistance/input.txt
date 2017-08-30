@@ -1,0 +1,13 @@
+4
+4 5
+geek
+gesek
+3 3
+cat
+cut
+6 8
+sunday
+saturday
+7 9
+abcdefg
+hijklmnop
