@@ -1,4 +1,5 @@
 #include <iostream>
+#include <ctime>
 
 #include "..\..\shared\ProblemEngine.h"
 
@@ -34,9 +35,11 @@ int main(int argc, char * argv[])
 		auto firstString = BuildString(testCase.Datas.front().get(), testCase.Sizes.front());
 		auto secondString = BuildString(testCase.Datas.back().get(), testCase.Sizes.back());
 
+		auto start = clock();
 		auto editDistance = EditDistance(firstString, secondString);
+		auto time = double(clock() - start) / CLOCKS_PER_SEC;
 
-		std::cout << editDistance << std::endl;
+		std::cout << editDistance << " (" << time << ")" << std::endl;
 	}
 
 	return 0;
@@ -44,5 +47,20 @@ int main(int argc, char * argv[])
 
 int EditDistance(const std::string& one, const std::string& two)
 {
-	return 0;
+	if (one.empty())
+		return two.size();
+	if (two.empty())
+		return one.size();
+
+	auto newOne = one.substr(0, one.size() - 1);
+	auto newTwo = two.substr(0, two.size() - 1);
+
+	if (one.back() == two.back())
+		return EditDistance(newOne, newTwo);
+
+	return 1 + min(min(
+		EditDistance(newOne, two),
+		EditDistance(one, newTwo)),
+		EditDistance(newOne, newTwo)
+	);
 }
