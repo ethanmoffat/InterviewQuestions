@@ -25,10 +25,16 @@ int EditDistanceDynamic(const std::string& one, const std::string& two);
 
 int main(int argc, char * argv[])
 {
-	ProblemEngine<char> engine("input.txt");
+	if (argc != 2)
+	{
+		std::cout << "No input file specified." << std::endl;
+		return 1;
+	}
+
+	ProblemEngine<char> engine(argv[1]);
 	if (!engine.IsFileOk())
 	{
-		std::cout << "Unable to open input.txt" << std::endl;
+		std::cout << "Unable to open " << argv[1] << std::endl;
 		return 1;
 	}
 

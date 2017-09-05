@@ -9,10 +9,16 @@ PNode ReverseList(PNode head);
 
 int main(int argc, char * argv[])
 {
-	ProblemEngine<> engine("input.txt");
+	if (argc != 2)
+	{
+		std::cout << "No input file specified." << std::endl;
+		return 1;
+	}
+
+	ProblemEngine<> engine(argv[1]);
 	if (!engine.IsFileOk())
 	{
-		std::cout << "Unable to open input.txt" << std::endl;
+		std::cout << "Unable to open " << argv[1] << std::endl;
 		return 1;
 	}
 
