@@ -78,6 +78,11 @@
   <ItemGroup>
     <Text Include="input.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\shared\shared.vcxproj">
+      <Project>{8099a3bd-afb9-4361-a14d-6dac84dd548b}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

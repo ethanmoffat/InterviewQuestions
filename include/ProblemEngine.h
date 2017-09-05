@@ -30,7 +30,7 @@ public:
 		_inputFile.close();
 	}
 
-	bool IsFileOk() const { return !_inputFile.bad() && !_inputFile.eof(); }
+	bool IsFileOk() const { return !_inputFile.bad() && !_inputFile.eof() && _inputFile.is_open(); }
 
 	std::list<TestCase<T>> LoadTestCases(int inputsPerCase = 1)
 	{
