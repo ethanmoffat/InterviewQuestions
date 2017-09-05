@@ -116,9 +116,9 @@ std::string LCSIterativeDynamic(const std::string& str1, const std::string& str2
 {
 	LcsMap map;
 
-	for (int i = 0; i < str1.length(); ++i)
+	for (size_t i = 0; i < str1.length(); ++i)
 	{
-		for (int j = 0; j < str2.length(); ++j)
+		for (size_t j = 0; j < str2.length(); ++j)
 		{
 			if (str1[i] == str2[j])
 				map[i+1][j+1] = map[i][j] + str1[i];
