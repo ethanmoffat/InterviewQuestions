@@ -20,7 +20,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="input.txt">
+    <Text Include="MatrixMinCostPath.txt">
       <Filter>Source Files</Filter>
     </Text>
   </ItemGroup>
