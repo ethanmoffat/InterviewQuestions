@@ -2,8 +2,8 @@
 #include <fstream>
 #include <memory>
 
-#include "..\..\shared\list.h"
-#include "..\..\shared\ProblemEngine.h"
+#include "list.h"
+#include "ProblemEngine.h"
 
 PNode SortList(PNode head);
 

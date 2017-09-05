@@ -2,7 +2,7 @@
 #include <ctime>
 #include <map>
 
-#include "..\..\shared\ProblemEngine.h"
+#include "ProblemEngine.h"
 
 typedef std::map<size_t, std::map<size_t, int>> EditDistMap;
 

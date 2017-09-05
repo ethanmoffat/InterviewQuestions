@@ -2,7 +2,7 @@
 #include <fstream>
 #include <memory>
 
-#include "..\..\shared\ProblemEngine.h"
+#include "ProblemEngine.h"
 
 int FindSingleElement(const std::shared_ptr<int>& inputArray, int size);
 

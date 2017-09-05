@@ -5,7 +5,7 @@
 #include <map>
 #include <ctime>
 
-#include "..\..\shared\ProblemEngine.h"
+#include "ProblemEngine.h"
 
 //build properly terminated string out of raw character pointer
 std::string BuildString(char * ptr, int numElements)

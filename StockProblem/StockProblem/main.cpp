@@ -2,7 +2,7 @@
 #include <fstream>
 #include <list>
 
-#include "..\..\shared\ProblemEngine.h"
+#include "ProblemEngine.h"
 
 struct BuySell
 {

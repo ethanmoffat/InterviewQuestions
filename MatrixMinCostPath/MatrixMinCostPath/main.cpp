@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "..\..\shared\ProblemEngine.h"
+#include "ProblemEngine.h"
 
 int FindShortestPath(int ** data, int rowSize);
 
